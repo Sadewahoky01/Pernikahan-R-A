@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding of Rudi Syahputra & Nelly Adelia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #d4af37;
+            --dark: #2c3e50;
+            --light: #f4f4f4;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--dark); background: var(--light); scroll-behavior: smooth; }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+        }
+        .hero h1 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 5.5rem); }
+
+        /* Section Styling */
+        section { padding: 80px 20px; text-align: center; }
+        h2 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary); margin-bottom: 30px; }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px; max-width: 1000px; margin: 0 auto;
+        }
+        .gallery-grid img {
+            width: 100%; height: 250px; object-fit: cover;
+            border-radius: 10px; transition: 0.3s; filter: grayscale(30%);
+        }
+        .gallery-grid img:hover { transform: scale(1.03); filter: grayscale(0); }
+
+        /* Maps */
+        .map-container {
+            max-width: 800px; margin: 20px auto;
+            border: 5px solid var(--white); border-radius: 15px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* RSVP Form */
+        .rsvp-form {
+            max-width: 500px; margin: 0 auto; background: white;
+            padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .rsvp-form input, .rsvp-form select {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid #ddd; border-radius: 5px;
+        }
+
+        /* Music Floating Button */
+        #music-control {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            background: var(--primary); color: white; padding: 12px 25px;
+            border: none; border-radius: 25px; cursor: pointer; text-decoration: none;
+            display: inline-block; margin-top: 10px;
+        }
+
+        .time-box { background: var(--dark); color: white; padding: 15px; border-radius: 10px; min-width: 80px; display: inline-block; margin: 5px; }
+    </style>
+</head>
+<body>
+
+    <audio id="weddingSong" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-control" onclick="toggleMusic()">🎵</div>
+
+    <section class="hero">
+        <div>
+            <h2>The Wedding of</h2>
+            <h1>Rudi Syahputra & Nelly Adelia</h1>
+            <p>SAVE THE DATE: 01.01.2027</p>
+            <a href="#mempelai" class="btn">Buka Undangan</a>
+        </div>
+    </section>
+
+    <section id="mempelai">
+        <h2>Mempelai</h2>
+        <p style="margin-bottom: 20px;">Kami mengundang Anda untuk merayakan kebahagiaan kami.</p>
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+            <div><h3>Rudi Syahputra</h3><p>Putra Bp.Suwardi & Ibu Rusliana</p></div>
+            <div style="font-family: 'Great Vibes'; font-size: 3rem;">&</div>
+            <div><h3>Nelly Adelia</h3><p>Putri Bp.gf & Ibu D</p></div>
+        </div>
+    </section>
+
+    <section style="background: #eee;">
+        <h2>Menghitung Hari</h2>
+        <div id="countdown">
+            <div class="time-box"><span id="days">00</span><br>Hari</div>
+            <div class="time-box"><span id="hours">00</span><br>Jam</div>
+            <div class="time-box"><span id="mins">00</span><br>Menit</div>
+            <div class="time-box"><span id="secs">00</span><br>Detik</div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2>Galeri Foto</h2>
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000&auto=format&fit=crop" alt="Foto 1">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1000&auto=format&fit=crop" alt="Foto 2">
+            <img src="https://images.unsplash.com/photo-1465495910483-0d67498a8416?q=80&w=1000&auto=format&fit=crop" alt="Foto 3">
+            <img src="https://images.unsplash.com/photo-1522673607200-164883524354?q=80&w=1000&auto=format&fit=crop" alt="Foto 4">
+        </div>
+    </section>
+
+    <section id="lokasi" style="background: white;">
+        <h2>Lokasi Acara</h2>
+        <p>Gedung Serbaguna, Jl. Mawar No. 456</p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.050186981156!2d106.8248553!3d-6.257123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTUnMjUuNiJTIDEwNsKwNDknMjkuNSJF!5e0!3m2!1sid!2sid!4v1625000000000!5m2!1sid!2sid" 
+                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn">Buka Google Maps</a>
+    </section>
+
+    <section id="rsvp">
+        <h2>Konfirmasi Kehadiran</h2>
+        <div class="rsvp-form">
+            <form>
+                <input type="text" placeholder="Nama Lengkap" required>
+                <select>
+                    <option value="">Jumlah Tamu</option>
+                    <option value="1">1 Orang</option>
+                    <option value="2">2 Orang</option>
+                </select>
+                <select>
+                    <option value="hadir">Akan Hadir</option>
+                    <option value="tidak">Maaf, Tidak Bisa Hadir</option>
+                </select>
+                <button type="submit" class="btn" style="width: 100%;">Kirim Konfirmasi</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 40px; background: var(--dark); color: white; font-size: 0.8rem;">
+        <p>Terima kasih atas doa restunya.</p>
+        <p>&copy; 2026 Rudi Syahputra & Nelly Adelia </p>
+    </footer>
+
+    <script>
+        // Music Toggle
+        const song = document.getElementById("weddingSong");
+        function toggleMusic() {
+            if (song.paused) {
+                song.play();
+                document.getElementById("music-control").innerHTML = "⏸️";
+            } else {
+                song.pause();
+                document.getElementById("music-control").innerHTML = "🎵";
+            }
+        }
+
+        // Countdown
+        const weddingDate = new Date("Jan 1, 2027 08:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+    </script>
+</body>
+</html>
