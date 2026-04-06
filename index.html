@@ -14,102 +14,336 @@
             --white: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; color: var(--dark); background: var(--light); scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Hero */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Welcome Screen Overlay */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            z-index: 9999;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        #welcome-screen.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #welcome-screen h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        #welcome-screen h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 10vw, 5rem);
+            margin-bottom: 20px;
+        }
+
+        /* Auth Card */
+        #auth-card {
+            background: rgba(255,255,255,0.92);
+            border-radius: 28px;
+            max-width: 420px;
+            width: 100%;
+            padding: 35px 30px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.25);
+            backdrop-filter: blur(12px);
+            color: var(--dark);
+        }
+
+        #auth-card h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        #auth-card p {
+            margin-bottom: 25px;
+            color: #606060;
+            line-height: 1.7;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(44,62,80,0.15);
+            font-size: 1rem;
+            color: var(--dark);
+            background: #f8f8f8;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+            background: #fff;
+        }
+
+        .auth-note {
+            font-size: 0.95rem;
+            color: #7a7a7a;
+            margin-top: 15px;
+        }
+
+        .auth-error {
+            margin-top: 20px;
+            color: #d63031;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        body.locked {
+            overflow: hidden;
+        }
+
+        /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop');
-            background-size: cover; background-position: center;
-            display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
         }
-        .hero h1 { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 10vw, 5.5rem); }
 
-        /* Section Styling */
-        section { padding: 80px 20px; text-align: center; }
-        h2 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary); margin-bottom: 30px; }
+        .hero h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+        }
+
+        /* Section General */
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
 
         /* Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px; max-width: 1000px; margin: 0 auto;
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
+
         .gallery-grid img {
-            width: 100%; height: 250px; object-fit: cover;
-            border-radius: 10px; transition: 0.3s; filter: grayscale(30%);
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: 0.3s;
+            filter: grayscale(30%);
         }
-        .gallery-grid img:hover { transform: scale(1.03); filter: grayscale(0); }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03);
+            filter: grayscale(0);
+        }
 
         /* Maps */
         .map-container {
-            max-width: 800px; margin: 20px auto;
-            border: 5px solid var(--white); border-radius: 15px; overflow: hidden;
+            max-width: 800px;
+            margin: 20px auto;
+            border: 5px solid var(--white);
+            border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* RSVP Form */
+        /* RSVP */
         .rsvp-form {
-            max-width: 500px; margin: 0 auto; background: white;
-            padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .rsvp-form input, .rsvp-form select {
-            width: 100%; padding: 12px; margin: 10px 0;
-            border: 1px solid #ddd; border-radius: 5px;
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        /* Music Floating Button */
+        .rsvp-form input,
+        .rsvp-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Float Controls */
         #music-control {
-            position: fixed; bottom: 20px; right: 20px;
-            background: var(--primary); color: white;
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .btn {
-            background: var(--primary); color: white; padding: 12px 25px;
-            border: none; border-radius: 25px; cursor: pointer; text-decoration: none;
-            display: inline-block; margin-top: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 35px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        .time-box { background: var(--dark); color: white; padding: 15px; border-radius: 10px; min-width: 80px; display: inline-block; margin: 5px; }
+        .btn:hover {
+            background: #b8962d;
+            transform: translateY(-2px);
+        }
+
+        .time-box {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+            display: inline-block;
+            margin: 5px;
+        }
     </style>
 </head>
-<body>
+<body class="locked">
+
+    <div id="welcome-screen">
+        <h2>The Wedding of</h2>
+        <h1>Rudi & Nelly</h1>
+        <p style="margin-bottom: 15px; letter-spacing: 2px; color: rgba(255,255,255,0.85);">
+            SABTU, 04 APRIL 2026
+        </p>
+        <div id="auth-card">
+            <h2>Undangan Tamu Terundang</h2>
+            <p>Masukkan nama tamu dan password yang telah kami kirim untuk membuka undangan ini.</p>
+            <input id="guest-name" class="auth-input" type="text" placeholder="Nama Tamu" autocomplete="off" />
+            <input id="guest-password" class="auth-input" type="password" placeholder="Password" autocomplete="off" />
+            <button class="btn" style="width: 100%; margin-top: 10px; padding: 14px 0;" onclick="openInvitation()">
+                Masuk ke Undangan
+            </button>
+            <p class="auth-note">Jika belum menerima password, silakan hubungi pasangan pengantin.</p>
+            <p id="auth-error" class="auth-error"></p>
+        </div>
+    </div>
 
     <audio id="weddingSong" loop>
         <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
     </audio>
-    <div id="music-control" onclick="toggleMusic()">🎵</div>
+    <div id="music-control" onclick="toggleMusic()">⏸️</div>
 
     <section class="hero">
         <div>
-            <h2>The Wedding of</h2>
+            <h2>You are Invited</h2>
             <h1>Rudi Syahputra & Nelly Adelia</h1>
-            <p>SAVE THE DATE: April.04.2026</p>
-            <a href="#mempelai" class="btn">Buka Undangan</a>
+            <p>Kami memohon doa restu Bapak/Ibu/Saudara/i</p>
         </div>
     </section>
 
     <section id="mempelai">
         <h2>Mempelai</h2>
-        <p style="margin-bottom: 20px;">Kami mengundang Anda untuk merayakan kebahagiaan kami.</p>
-        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
-            <div><h3>Rudi Syahputra</h3><p>Putra Bp.Suwardi & Ibu Rusliana</p></div>
-            <div style="font-family: 'Great Vibes'; font-size: 3rem;">&</div>
-            <div><h3>Nelly Adelia</h3><p>Putri Bp.gf & Ibu D</p></div>
+        <p style="margin-bottom: 20px;">
+            Assalamu'alaikum Wr. Wb. Dengan memohon rahmat Allah SWT, kami mengundang Anda di hari bahagia kami:
+        </p>
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; align-items: center;">
+            <div>
+                <h3 style="font-size: 1.8rem; color: var(--primary);">Rudi Syahputra</h3>
+                <p>Putra Bp. Suwardi & Ibu Rusliana</p>
+            </div>
+            <div style="font-family: 'Great Vibes'; font-size: 3.5rem; color: var(--primary);">&</div>
+            <div>
+                <h3 style="font-size: 1.8rem; color: var(--primary);">Nelly Adelia</h3>
+                <p>Putri Bp. GF & Ibu D</p>
+            </div>
         </div>
     </section>
 
-    <section style="background: #eee;">
+    <section id="kisah-cinta">
+        <h2>Kisah Cinta Kami</h2>
+        <p>
+            Kisah cinta Rudi dan Nelly dimulai dari pertemuan yang tak terduga di sebuah kafe kecil di Jakarta.
+            Rudi, seorang insinyur yang sibuk, dan Nelly, seorang desainer kreatif, saling tertarik sejak pandangan pertama.
+            Setelah beberapa percakapan yang menyenangkan, mereka mulai menjalin hubungan yang penuh dengan petualangan dan cinta sejati.
+            Hari ini, mereka akan menyatukan hidup mereka dalam ikatan pernikahan yang sakral.
+        </p>
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop" alt="Pertemuan pertama">
+            <img src="https://images.unsplash.com/photo-1522673607200-164883524354?q=80&w=1000&auto=format&fit=crop" alt="Petualangan bersama">
+            <img src="https://images.unsplash.com/photo-1465495910483-0d67498a8416?q=80&w=1000&auto=format&fit=crop" alt="Momen spesial">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000&auto=format&fit=crop" alt="Cinta abadi">
+        </div>
+    </section>
+
+    <section style="background: #e9ecef;">
         <h2>Menghitung Hari</h2>
         <div id="countdown">
-            <div class="time-box"><span id="days">00</span><br>Hari</div>
-            <div class="time-box"><span id="hours">00</span><br>Jam</div>
-            <div class="time-box"><span id="mins">00</span><br>Menit</div>
-            <div class="time-box"><span id="secs">00</span><br>Detik</div>
+            <div class="time-box">
+                <span id="days">00</span><br>
+                Hari
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span><br>
+                Jam
+            </div>
+            <div class="time-box">
+                <span id="mins">00</span><br>
+                Menit
+            </div>
+            <div class="time-box">
+                <span id="secs">00</span><br>
+                Detik
+            </div>
         </div>
     </section>
 
@@ -125,10 +359,14 @@
 
     <section id="lokasi" style="background: white;">
         <h2>Lokasi Acara</h2>
-        <p>Gedung Serbaguna, Jl. Mawar No. 456</p>
+        <p>
+            <strong>Gedung Serbaguna</strong><br>
+            Jl. Mawar No. 456
+        </p>
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.050186981156!2d106.8248553!3d-6.257123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTUnMjUuNiJTIDEwNsKwNDknMjkuNSJF!5e0!3m2!1sid!2sid!4v1625000000000!5m2!1sid!2sid" 
-                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d106.8!3d-6.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMDAuMCJTIDEwNiw0OCcwMC4wIkU!5e0!3m2!1sid!2sid!4v1610000000000"
+                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
         </div>
         <a href="https://maps.google.com" target="_blank" class="btn">Buka Google Maps</a>
     </section>
@@ -136,50 +374,263 @@
     <section id="rsvp">
         <h2>Konfirmasi Kehadiran</h2>
         <div class="rsvp-form">
-            <form>
+            <form action="#">
                 <input type="text" placeholder="Nama Lengkap" required>
-                <select>
+                <select required>
                     <option value="">Jumlah Tamu</option>
                     <option value="1">1 Orang</option>
                     <option value="2">2 Orang</option>
                 </select>
-                <select>
+                <select required>
                     <option value="hadir">Akan Hadir</option>
                     <option value="tidak">Maaf, Tidak Bisa Hadir</option>
                 </select>
-                <button type="submit" class="btn" style="width: 100%;">Kirim Konfirmasi</button>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">
+                    Kirim Konfirmasi
+                </button>
             </form>
+            <div id="rsvp-list" style="margin-top: 30px;">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">Daftar Konfirmasi</h3>
+                <div id="attending" style="margin-bottom: 20px;">
+                    <h4>Akan Hadir</h4>
+                    <div id="attending-list"></div>
+                </div>
+                <div id="not-attending">
+                    <h4>Tidak Bisa Hadir</h4>
+                    <div id="not-attending-list"></div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer style="padding: 40px; background: var(--dark); color: white; font-size: 0.8rem;">
-        <p>Terima kasih atas doa restunya.</p>
-        <p>&copy; 2026 Rudi Syahputra & Nelly Adelia </p>
+    <section id="kado-pernikahan" style="background: #f8f9fa;">
+        <h2>Kado Pernikahan</h2>
+        <p>Kehadiran Anda adalah hadiah terbesar bagi kami. Namun, jika Anda ingin memberikan kado, kami menerima amplop digital melalui transfer ke rekening berikut:</p>
+        <div style="max-width: 600px; margin: 0 auto; text-align: left; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <h3 style="color: var(--primary); margin-bottom: 15px;">Rekening Bank</h3>
+            <p>
+                <strong>Bank BCA</strong><br>
+                Nama: Rudi Syahputra<br>
+                No. Rekening: 1234567890
+            </p>
+            <p style="margin-top: 15px;">
+                <strong>Bank Mandiri</strong><br>
+                Nama: Nelly Adelia<br>
+                No. Rekening: 0987654321
+            </p>
+            <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">QRIS</h3>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+                <div style="text-align: center;">
+                    <img src="Qris.png" alt="QRIS Rudi" style="width: 150px; height: 150px; border-radius: 10px;">
+                    <p>Rudi Syahputra</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="Qris.png" alt="QRIS Nelly" style="width: 150px; height: 150px; border-radius: 10px;">
+                    <p>Nelly Adelia</p>
+                </div>
+            </div>
+            <p style="margin-top: 15px; font-style: italic;">
+                Mohon konfirmasi setelah transfer. Terima kasih atas kebaikan hati Anda!
+            </p>
+        </div>
+    </section>
+
+    <section id="buku-tamu" style="background: white;">
+        <h2>Buku Tamu Digital</h2>
+        <p>Tinggalkan pesan dan doa untuk kami di buku tamu digital ini.</p>
+        <div style="max-width: 600px; margin: 0 auto; background: #f8f9fa; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <form id="guestbook-form">
+                <input type="text" placeholder="Nama Lengkap" required style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                <input type="email" placeholder="Email (Opsional)" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                <textarea placeholder="Pesan dan Doa" rows="4" required style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Kirim Pesan</button>
+            </form>
+            <div id="messages" style="margin-top: 30px;"></div>
+        </div>
+    </section>
+
+    <footer style="padding: 60px 20px; background: var(--dark); color: white;">
+        <p>Merupakan suatu kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
+        <p style="margin-top: 20px; opacity: 0.7;">© 2026 Rudi Syahputra & Nelly Adelia</p>
     </footer>
 
     <script>
-        // Music Toggle
+        // Global variables
         const song = document.getElementById("weddingSong");
-        function toggleMusic() {
-            if (song.paused) {
-                song.play();
-                document.getElementById("music-control").innerHTML = "⏸️";
-            } else {
-                song.pause();
-                document.getElementById("music-control").innerHTML = "🎵";
+        const musicCtrl = document.getElementById("music-control");
+
+        // Guest passwords
+        const guestPasswords = {
+            "Rudi Syahputra": "rudi2026",
+            "Nelly Adelia": "nelly2026",
+            "Bapak Suwardi": "suwardi2026",
+            "Ibu Rusliana": "rusliana2026"
+        };
+
+        // Show error message
+        function showError(message) {
+            const errorEl = document.getElementById('auth-error');
+            if (errorEl) {
+                errorEl.textContent = message;
             }
         }
 
-        // Countdown
-        const weddingDate = new Date("Jan 1, 2027 08:00:00").getTime();
+        // Open invitation with password validation
+        function openInvitation() {
+            const guestNameInput = document.getElementById('guest-name');
+            const guestPasswordInput = document.getElementById('guest-password');
+            const guest = guestNameInput.value.trim();
+            const password = guestPasswordInput.value.trim();
+
+            if (!guest) {
+                showError('Silakan masukkan nama tamu.');
+                guestNameInput.focus();
+                return;
+            }
+            if (!password) {
+                showError('Silakan masukkan password Anda.');
+                guestPasswordInput.focus();
+                return;
+            }
+            if (!guestPasswords[guest]) {
+                showError('Nama tamu tidak ditemukan. Cek kembali ejaan Anda.');
+                return;
+            }
+            if (password !== guestPasswords[guest]) {
+                showError('Password salah. Silakan coba lagi.');
+                return;
+            }
+
+            showError('');
+            document.getElementById("welcome-screen").classList.add("hidden");
+            document.body.classList.remove("locked");
+            song.play().catch(() => {});
+            musicCtrl.style.display = "flex";
+        }
+
+        // Toggle music playback
+        function toggleMusic() {
+            if (song.paused) {
+                song.play();
+                musicCtrl.innerHTML = "⏸️";
+            } else {
+                song.pause();
+                musicCtrl.innerHTML = "🎵";
+            }
+        }
+
+        // Countdown timer
+        const weddingDate = new Date("Apr 4, 2026 09:00:00").getTime();
         setInterval(function() {
             const now = new Date().getTime();
             const diff = weddingDate - now;
-            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (diff > 0) {
+                document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
         }, 1000);
+
+        // Guestbook functionality
+        const guestbookForm = document.getElementById('guestbook-form');
+        const messagesDiv = document.getElementById('messages-list');
+
+        // Load messages from localStorage
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
+            messagesDiv.innerHTML = messages.map((msg, index) => `
+                <div style="background: white; padding: 15px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative;">
+                    <strong>${msg.name}</strong> <small>(${new Date(msg.timestamp).toLocaleString()})</small><br>
+                    ${msg.message}
+                    <button class="delete-btn" data-index="${index}" style="position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">Hapus</button>
+                </div>
+            `).join('');
+        }
+
+        // Save message
+        guestbookForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.querySelector('input[type="text"]').value;
+            const message = this.querySelector('textarea').value;
+
+            const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
+            messages.push({
+                name: name,
+                message: message,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('weddingMessages', JSON.stringify(messages));
+
+            this.reset();
+            loadMessages();
+            alert('Pesan Anda telah dikirim! Terima kasih.');
+        });
+
+        // Delete message
+        messagesDiv.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-btn')) {
+                const index = e.target.getAttribute('data-index');
+                const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
+                messages.splice(index, 1);
+                localStorage.setItem('weddingMessages', JSON.stringify(messages));
+                loadMessages();
+            }
+        });
+
+        // Load messages on page load
+        loadMessages();
+
+        // RSVP functionality
+        const rsvpForm = document.querySelector('#rsvp form');
+        const attendingList = document.getElementById('attending-list');
+        const notAttendingList = document.getElementById('not-attending-list');
+
+        // Load RSVPs from localStorage
+        function loadRSVPs() {
+            const rsvps = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
+            attendingList.innerHTML = '';
+            notAttendingList.innerHTML = '';
+            rsvps.forEach(rsvp => {
+                const div = document.createElement('div');
+                div.style.background = 'white';
+                div.style.padding = '10px';
+                div.style.margin = '5px 0';
+                div.style.borderRadius = '5px';
+                div.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                div.innerHTML = `<strong>${rsvp.name}</strong> - ${rsvp.guests} tamu <small>(${new Date(rsvp.timestamp).toLocaleString()})</small>`;
+                if (rsvp.status === 'hadir') {
+                    attendingList.appendChild(div);
+                } else {
+                    notAttendingList.appendChild(div);
+                }
+            });
+        }
+
+        // Save RSVP
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.querySelector('input[type="text"]').value;
+            const guests = this.querySelector('select').value;
+            const status = this.querySelector('select:last-of-type').value;
+
+            const rsvps = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
+            rsvps.push({
+                name: name,
+                guests: guests,
+                status: status,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('weddingRSVPs', JSON.stringify(rsvps));
+
+            this.reset();
+            loadRSVPs();
+            alert('Konfirmasi kehadiran Anda telah dikirim! Terima kasih.');
+        });
+
+        // Load RSVPs on page load
+        loadRSVPs();
     </script>
 </body>
 </html>
